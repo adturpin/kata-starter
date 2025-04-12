@@ -69,6 +69,20 @@ yarn add -D @types/node
 yarn add -D vitest
 ```
 
+```bash
+cat <<EOF > vitest.config.ts
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+    test: {
+        include: ['tests/**/*.test.ts'],
+        exclude: ['dist', 'node_modules', '**/*.js']
+    }
+});
+EOF
+
+```
+
 ### 📝 6. Ajouter le script de test dans `package.json`
 
 ```json
@@ -85,11 +99,16 @@ mkdir tests
 ```
 
 ```bash
-echo "export function sum(a: number, b: number) { return a + b; }" > src/sum.ts
+cat <<EOF > src/sum.ts
+export function sum(a: number, b: number) {
+  return a + b;
+}
+EOF
 ```
 
 ```bash
-echo "import { describe, it, expect } from 'vitest';
+cat <<EOF > tests/sum.test.ts
+import { describe, it, expect } from 'vitest';
 import { sum } from '../src/sum';
 
 describe('sum', () => {
@@ -97,7 +116,8 @@ describe('sum', () => {
     expect(sum(2, 3)).toBe(5);
   });
 });
-" > tests/sum.test.ts
+EOF
+
 ```
 
 ### ▶️ 8. Lancer les tests
@@ -111,21 +131,24 @@ yarn test
 ## 🔧 tsconfig.json recommandé
 
 ```json
-echo '{
-   "compilerOptions": {
-     "target": "ES2020",
-     "module": "ESNext",
-     "moduleResolution": "Node",
-     "esModuleInterop": true,
-     "strict": true,
-     "skipLibCheck": true,
-     "forceConsistentCasingInFileNames": true,
-     "outDir": "./dist",
-     "rootDir": "./",
-     "types": []
-   },
-   "include": ["src", "tests"]
- }' >  tsconfig.json
+cat <<EOF > tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "types": []
+  },
+  "include": ["src", "tests"]
+}
+EOF
 ```
 
 ## 🧪 Générer un rapport de couverture de test
