@@ -151,6 +151,26 @@ cat <<EOF > tsconfig.json
 EOF
 ```
 
+## Run ts without compile 
+add tsx dependancies
+
+```bash
+yarn add -D tsx
+```
+
+create an entry point in src/main.ts 
+update package.json
+```bash
+"scripts": {
+  "dev": "tsx src/main.ts"
+}
+```
+
+run app with 
+```bash
+yarn dev
+```
+
 ## 🧪 Générer un rapport de couverture de test
 
 Vitest permet de générer un rapport de **coverage** (couverture de code).
